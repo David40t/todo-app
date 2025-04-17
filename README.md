@@ -8,6 +8,7 @@ Una aplicación segura para gestionar tareas, desarrollada con PHP utilizando Pr
 - Gestión completa de tareas (crear, leer, actualizar, eliminar)
 - Diseño responsivo con Tailwind CSS
 - Código con tipado fuerte para mayor robustez y claridad
+- Variables de entorno para configuración segura
 - Protección contra vulnerabilidades web comunes:
   - Inyección SQL (mediante PDO y consultas preparadas)
   - Cross-Site Scripting (XSS)
@@ -38,20 +39,32 @@ cd todo-app
 composer install
 ```
 
-3. **Configurar la base de datos:**
+3. **Configurar las variables de entorno:**
+
+```bash
+# Copiar el archivo de ejemplo
+cp .env.example .env
+
+# Generar claves seguras
+php generate-keys.php
+
+# Editar el archivo .env con las claves generadas y configurar la base de datos
+```
+
+4. **Configurar la base de datos:**
 
 - Crear una base de datos MySQL
 - Importar el archivo `database/schema.sql` para crear las tablas necesarias
-- Editar el archivo `src/config/Database.php` con los datos de conexión a tu base de datos
+- Verificar que las credenciales en el archivo `.env` son correctas:
 
-```php
-private $host = '127.0.0.1'; // Tu host
-private $db_name = 'todo_app'; // Nombre de tu base de datos
-private $username = 'root'; // Tu usuario
-private $password = ''; // Tu contraseña
+```
+DB_HOST=127.0.0.1
+DB_NAME=todo_app
+DB_USER=root
+DB_PASS=tu_contraseña
 ```
 
-4. **Configurar el servidor web:**
+5. **Configurar el servidor web:**
 
 - Apuntar el directorio raíz del servidor web a la carpeta `public` de la aplicación
 - Asegurarse de que el módulo `mod_rewrite` esté habilitado en Apache
@@ -62,35 +75,38 @@ private $password = ''; // Tu contraseña
 ```
 todo-app/
 ├── database/
-│   └── schema.sql           # Esquema de la base de datos
+│   └── schema.sql            # Esquema de la base de datos
 ├── public/
-│   ├── css/                 # Archivos CSS
-│   ├── js/                  # Archivos JavaScript
-│   ├── img/                 # Imágenes
-│   ├── .htaccess            # Configuración de Apache
-│   └── index.php            # Punto de entrada
+│   ├── css/                  # Archivos CSS
+│   ├── js/                   # Archivos JavaScript
+│   ├── img/                  # Imágenes
+│   ├── .htaccess             # Configuración de Apache
+│   └── index.php             # Punto de entrada
 ├── src/
 │   ├── config/
-│   │   └── Database.php     # Configuración de la base de datos
+│   │   └── Database.php      # Configuración de la base de datos
 │   ├── controllers/
-│   │   ├── AuthController.php  # Controlador de autenticación
-│   │   └── TaskController.php  # Controlador de tareas
+│   │   ├── AuthController.php   # Controlador de autenticación
+│   │   └── TaskController.php   # Controlador de tareas
 │   ├── models/
-│   │   ├── User.php         # Modelo de usuario
-│   │   └── Task.php         # Modelo de tarea
+│   │   ├── User.php          # Modelo de usuario
+│   │   └── Task.php          # Modelo de tarea
 │   ├── routes/
-│   │   ├── Router.php       # Clase de enrutamiento
-│   │   └── routes.php       # Definición de rutas
+│   │   ├── Router.php        # Clase de enrutamiento
+│   │   └── routes.php        # Definición de rutas
 │   ├── utils/
-│   │   └── Security.php     # Utilidades de seguridad
-│   └── views/               # Vistas
+│   │   └── Security.php      # Utilidades de seguridad
+│   └── views/                # Vistas
 │       ├── auth/
 │       ├── errors/
 │       ├── layout/
 │       └── tasks/
-├── vendor/                  # Dependencias (generado por Composer)
-├── composer.json            # Configuración de Composer
-└── README.md               # Documentación
+├── vendor/                   # Dependencias (generado por Composer)
+├── .env                      # Variables de entorno (no incluido en repositorio)
+├── .env.example              # Ejemplo de variables de entorno
+├── composer.json             # Configuración de Composer
+├── generate-keys.php         # Script para generar claves seguras
+└── README.md                 # Documentación
 ```
 
 ## Uso
@@ -99,6 +115,34 @@ todo-app/
 2. Regístrate como nuevo usuario
 3. Inicia sesión con tus credenciales
 4. Comienza a crear y gestionar tus tareas
+
+## Variables de Entorno
+
+La aplicación utiliza un archivo `.env` para la configuración sensible:
+
+```
+# Configuración de la Base de Datos
+DB_HOST=127.0.0.1        # Host de la base de datos
+DB_NAME=todo_app         # Nombre de la base de datos
+DB_USER=root             # Usuario de la base de datos
+DB_PASS=                 # Contraseña de la base de datos
+
+# Configuración de la Aplicación
+APP_ENV=development      # Entorno (development o production)
+APP_DEBUG=true           # Mostrar errores detallados
+APP_URL=http://localhost:8000  # URL base de la aplicación
+
+# Configuración de Seguridad
+APP_KEY=...              # Clave para encriptación (generada con generate-keys.php)
+JWT_SECRET=...           # Clave para tokens JWT (generada con generate-keys.php)
+SESSION_SECURE=false     # Usar cookies seguras (recomendado true en producción)
+SESSION_HTTP_ONLY=true   # Usar cookies HTTP-only
+```
+
+Para generar claves seguras:
+```bash
+php generate-keys.php
+```
 
 ## Seguridad
 
@@ -110,6 +154,7 @@ Esta aplicación implementa varias medidas de seguridad:
 - **Consultas preparadas**: Prevención de inyección SQL
 - **Cabeceras de seguridad HTTP**: Protección adicional del navegador
 - **Gestión segura de sesiones**: Prevención de session fixation y hijacking
+- **Variables de entorno**: Configuración sensible separada del código
 
 ## Contribuciones
 

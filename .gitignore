@@ -1,0 +1,25 @@
+# Archivos de entorno
+.env
+.env.backup
+.env.production
+
+# Directorios y archivos generados
+/vendor/
+/node_modules/
+.phpunit.result.cache
+composer.lock
+npm-debug.log
+yarn-error.log
+
+# Directorios de caché y logs
+/storage/*.key
+/storage/logs/
+/storage/framework/
+/storage/app/
+
+# Archivos de IDE/Editor
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store 

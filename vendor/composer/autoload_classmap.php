@@ -6,12 +6,10 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Config\\Database' => $baseDir . '/src/config/Database.php',
-    'App\\Controllers\\AuthController' => $baseDir . '/src/controllers/AuthController.php',
-    'App\\Controllers\\TaskController' => $baseDir . '/src/controllers/TaskController.php',
-    'App\\Models\\Task' => $baseDir . '/src/models/Task.php',
-    'App\\Models\\User' => $baseDir . '/src/models/User.php',
-    'App\\Routes\\Router' => $baseDir . '/src/routes/Router.php',
-    'App\\Utils\\Security' => $baseDir . '/src/utils/Security.php',
+    'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+    'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+    'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );
