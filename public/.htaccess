@@ -1,0 +1,45 @@
+RewriteEngine On
+RewriteBase /
+
+# Evitar acceso directo a los directorios
+Options -Indexes
+
+# Redireccionar solicitudes a index.php si no es un archivo o carpeta existente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Configuración de seguridad
+<IfModule mod_headers.c>
+    # Evitar el sniffing de tipo MIME
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Habilitar el filtro XSS en navegadores web
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Evitar que el sitio se muestre en un iframe
+    Header set X-Frame-Options "DENY"
+    
+    # HTTP Strict Transport Security (HSTS)
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "no-referrer-when-downgrade"
+</IfModule>
+
+# Deshabilitar el listado de directorios
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# Limitar métodos HTTP
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_METHOD} !^(GET|POST)
+    RewriteRule .* - [F]
+</IfModule>
+
+# Proteger archivos sensibles
+<FilesMatch "(^\.ht|composer\.(json|lock)|\.env)">
+    Order allow,deny
+    Deny from all
+</FilesMatch> 
