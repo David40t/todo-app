@@ -15,15 +15,15 @@ if ($_ENV['APP_ENV'] === 'development' && $_ENV['APP_DEBUG'] === 'true') {
     error_reporting(0);
 }
 
-// Iniciar sesión
-session_start();
-
 // Configuración de cookies según variables de entorno
 session_set_cookie_params([
     'secure' => filter_var($_ENV['SESSION_SECURE'], FILTER_VALIDATE_BOOLEAN),
     'httponly' => filter_var($_ENV['SESSION_HTTP_ONLY'], FILTER_VALIDATE_BOOLEAN),
     'samesite' => 'Lax'
 ]);
+
+// Iniciar sesión
+session_start();
 
 // Configuración de cabeceras de seguridad
 header("X-XSS-Protection: 1; mode=block");
