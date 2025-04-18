@@ -1,5 +1,4 @@
 <?php
-use App\Utils\Security;
 
 $title = 'Mis Tareas';
 ob_start();
@@ -58,7 +57,7 @@ ob_start();
                         </a>
                         
                         <form action="/tasks/delete/<?= $task['id'] ?>" method="POST" class="inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">
-                            <input type="hidden" name="csrf_token" value="<?= Security::generateCSRFToken() ?>">
+                            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
                             <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition">
                                 Eliminar
                             </button>
